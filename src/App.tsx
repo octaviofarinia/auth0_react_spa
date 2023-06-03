@@ -1,28 +1,34 @@
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
-import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/header/Header";
 import Home from "./views/Home";
 import AdminPage from "./views/AdminPage";
 import ClientPage from "./views/ClientPage";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Header />}>
-      <Route index element={<Home />} />
-      <Route path="admin" element={<AdminPage />} />
-      <Route path="cliente" element={<ClientPage />} />
-    </Route>
-  )
-);
+import ErrorPage from "./views/ErrorPage";
+import ClientProfilePage from "./views/ClientProfilePage";
+import CallbackPage from "./components/auth0/CallbackPage";
+import { AuthenticationGuard } from "./components/auth0/AuthenticationGuard";
 
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/admin"
+          element={<AuthenticationGuard component={AdminPage} />}
+        />
+        <Route
+          path="/cliente"
+          element={<AuthenticationGuard component={ClientPage} />}
+        />
+        <Route
+          path="/cliente/perfil"
+          element={<AuthenticationGuard component={ClientProfilePage} />}
+        />
+        <Route path="/callback" element={<CallbackPage />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 }

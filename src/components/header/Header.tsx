@@ -1,12 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
-import LoginButton from "./auth0/LoginButton";
-import RegistroButton from "./auth0/RegistroButton";
+import { Link } from "react-router-dom";
+import LoginButton from "./LoginButton";
+import RegistroButton from "./RegistroButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "./LogoutButton";
+import ProfileButton from "./ProfileButton";
 
 const Header = () => {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <>
       <div className="bg-white lg:pb-12">
-        <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+        <div className="px-4 mx-auto max-w-screen-2xl md:px-8">
           <header className="flex items-center justify-between py-4 md:py-8">
             {/* logo - start */}
             <Link
@@ -41,14 +46,22 @@ const Header = () => {
             {/* nav - end */}
             {/* buttons - start */}
             <div className="-ml-8 flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
-              <LoginButton />
-              <RegistroButton />
+              {isAuthenticated ? (
+                <>
+                  <LogoutButton />
+                  <ProfileButton />
+                </>
+              ) : (
+                <>
+                  <LoginButton />
+                  <RegistroButton />
+                </>
+              )}
             </div>
             {/* buttons - end */}
           </header>
         </div>
       </div>
-      <Outlet />
     </>
   );
 };
