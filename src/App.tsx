@@ -5,8 +5,6 @@ import AdminPage from "./views/AdminPage";
 import ClientPage from "./views/ClientPage";
 import ErrorPage from "./views/ErrorPage";
 import ClientProfilePage from "./views/ClientProfilePage";
-import CallbackPage from "./components/auth0/CallbackPage";
-import { AuthenticationGuard } from "./components/auth0/AuthenticationGuard";
 
 function App() {
   return (
@@ -14,19 +12,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/admin"
-          element={<AuthenticationGuard component={AdminPage} />}
-        />
-        <Route
-          path="/cliente"
-          element={<AuthenticationGuard component={ClientPage} />}
-        />
-        <Route
-          path="/cliente/perfil"
-          element={<AuthenticationGuard component={ClientProfilePage} />}
-        />
-        <Route path="/callback" element={<CallbackPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/cliente" element={<ClientPage />} />
+        <Route path="/cliente/perfil" element={<ClientProfilePage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
